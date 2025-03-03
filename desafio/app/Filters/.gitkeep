@@ -1,0 +1,20 @@
+public function create()
+    {
+        $data = [
+            'produto_id'  => $this->request->getPost('produto_id'),
+            'cliente_id'  => $this->request->getPost('cliente_id'),
+            'status'      => $this->request->getPost('status'),
+            'quantidade'  => $this->request->getPost('quantidade'),
+            'data_pedido' => date('Y-m-d H:i:s') // Gerando data atual
+        ];
+
+        // Validação simples para evitar campos vazios
+        if (in_array(null, $data, true) || in_array('', $data, true)) {
+            return $this->failValidationErrors("Todos os campos são obrigatórios.");
+        }
+
+        $this->pedidoModel->createPedido($data);
+
+        return $this->respondCreated(['message' => 'Pedido criado com sucesso!', 'data' => $data]);
+    }
+}
