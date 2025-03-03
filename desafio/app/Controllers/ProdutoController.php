@@ -27,7 +27,7 @@ class ProdutoController extends ResourceController{
     unset($filters['page'], $filters['limit']);
 
     // Pegando as colunas válidas da tabela
-    $validColumns = $this->model->getFieldNames('cliente_tabela'); 
+    $validColumns = $this->model->getFieldNames('produto_tabela'); 
 
     foreach ($filters as $campo => $valor) {
         // Verifica se o campo existe na tabela antes de aplicar o filtro
@@ -60,7 +60,7 @@ class ProdutoController extends ResourceController{
         if(empty($data)){
             return $this->respond(RespostaPronta::resposta('POST', 'produtos/' , STATUS400 , 'nenhum dado enviado'));
         }
-        $requiredFields = ['nome','cpf_cnpj','razao_social'];
+        $requiredFields = ['preco','descricao'];
 
         $dadosRecebidos = array_keys($data);
         foreach ($requiredFields as $field){
@@ -94,7 +94,7 @@ class ProdutoController extends ResourceController{
         return $this->respond(RespostaPronta::resposta('PUT', 'produtos/' . $id, STATUS400, 'ID ' . $id . ' válido, mas os valores informados pelo usuário são nulos'));
     }
 
-    $dadosPermitidos = ['nome', 'cpf_cnpj', 'razao_social'];
+    $dadosPermitidos = ['preco', 'descricao'];
 
     // Verifica se foram enviados apenas campos permitidos
     $dadosRecebidos = array_keys($data);
