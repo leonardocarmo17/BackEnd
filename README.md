@@ -58,9 +58,9 @@ Para a autenticação JWT, foi criada uma tabela contendo os seguintes campos: `
 
 - Abra a pasta `desafio` no Visual Studio Code.
 - No terminal do Visual Studio, digite os seguintes comandos:
-  1. $env:PATH += ";C:\\php"
-  2. php spark migrate
-  3. php -S localhost:8000 -t public
+- $env:PATH += ";C:\\php"
+- php spark migrate
+- php -S localhost:8000 -t public
 - O primeiro adiciona temporariamente o caminho do PHP para o ambiente do projeto, o segundo executa as migrations e cria as tabelas no banco de dados, o terceiro inicia o servidor na porta 8000.
 
 #### 5.4 Inserção dos Dados no Workbench
