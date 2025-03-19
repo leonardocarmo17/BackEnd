@@ -1,12 +1,19 @@
 <?php 
 namespace App\Models;
 
-use App\Libraries\RespostaPronta;
 use CodeIgniter\Model;
 
 class ClienteModel extends Model{
     protected $table      = 'cliente_tabela';
-    protected $primaryKey = 'cliente_id';
-    protected $allowedFields = ['nome','cpf_cnpj','razao_social'];
-    
+    protected $primaryKey = 'id_cliente';
+    protected $allowedFields = ['nome_cliente', 'cpf_cnpj'];
+    protected $rota = 'clientes/';
+    public function tabelaInformacao() {
+        return [
+            'table'         => $this->table,
+            'primaryKey'    => $this->primaryKey,
+            'allowedFields' => $this->allowedFields,
+            'rota'          => $this->rota,
+        ];
+    }
 }

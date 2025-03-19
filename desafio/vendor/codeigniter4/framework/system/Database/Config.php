@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -12,8 +14,8 @@
 namespace CodeIgniter\Database;
 
 use CodeIgniter\Config\BaseConfig;
+use CodeIgniter\Exceptions\InvalidArgumentException;
 use Config\Database as DbConfig;
-use InvalidArgumentException;
 
 /**
  * Class Config
@@ -67,7 +69,7 @@ class Config extends BaseConfig
             assert(is_string($group));
 
             if (! isset($dbConfig->{$group})) {
-                throw new InvalidArgumentException($group . ' is not a valid database connection group.');
+                throw new InvalidArgumentException('"' . $group . '" is not a valid database connection group.');
             }
 
             $config = $dbConfig->{$group};

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,8 +13,8 @@
 
 namespace CodeIgniter\HTTP\Files;
 
-use InvalidArgumentException;
-use RuntimeException;
+use CodeIgniter\Exceptions\InvalidArgumentException;
+use CodeIgniter\Exceptions\RuntimeException;
 
 /**
  * Value object representing a single file uploaded through an

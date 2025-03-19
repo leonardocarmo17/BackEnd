@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,7 +13,7 @@
 
 namespace CodeIgniter\Database;
 
-use BadMethodCallException;
+use CodeIgniter\Exceptions\BadMethodCallException;
 
 /**
  * @template TConnection

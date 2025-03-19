@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,6 +13,7 @@
 
 namespace CodeIgniter\Cache\Handlers;
 
+use CodeIgniter\Exceptions\BadMethodCallException;
 use CodeIgniter\Exceptions\CriticalError;
 use CodeIgniter\I18n\Time;
 use Config\Cache;
@@ -83,7 +86,7 @@ class MemcachedHandler extends BaseHandler
                 $this->memcached->addServer(
                     $this->config['host'],
                     $this->config['port'],
-                    $this->config['weight']
+                    $this->config['weight'],
                 );
 
                 // attempt to get status of servers
@@ -101,7 +104,7 @@ class MemcachedHandler extends BaseHandler
                 // Check if we can connect to the server
                 $canConnect = $this->memcached->connect(
                     $this->config['host'],
-                    $this->config['port']
+                    $this->config['port'],
                 );
 
                 // If we can't connect, throw a CriticalError exception
@@ -114,7 +117,7 @@ class MemcachedHandler extends BaseHandler
                     $this->config['host'],
                     $this->config['port'],
                     true,
-                    $this->config['weight']
+                    $this->config['weight'],
                 );
             } else {
                 throw new CriticalError('Cache: Not support Memcache(d) extension.');
@@ -195,7 +198,7 @@ class MemcachedHandler extends BaseHandler
      */
     public function deleteMatching(string $pattern)
     {
-        throw new Exception('The deleteMatching method is not implemented for Memcached. You must select File, Redis or Predis handlers to use it.');
+        throw new BadMethodCallException('The deleteMatching method is not implemented for Memcached. You must select File, Redis or Predis handlers to use it.');
     }
 
     /**

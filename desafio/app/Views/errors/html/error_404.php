@@ -70,7 +70,7 @@
 </head>
 <body>
     <div class="wrap">
-        <h1>404</h1>
+        <h1>Página Não Encontrada - 404</h1>
 
         <p>
             <?php if (ENVIRONMENT !== 'production') : ?>

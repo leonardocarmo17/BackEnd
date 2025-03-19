@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -11,9 +13,9 @@
 
 namespace CodeIgniter\HTTP;
 
+use CodeIgniter\Exceptions\RuntimeException;
 use Config\App;
 use Locale;
-use RuntimeException;
 
 /**
  * Represents a request from the command-line. Provides additional
@@ -56,7 +58,7 @@ class CLIRequest extends Request
      *
      * @var string
      */
-    protected $method = 'cli';
+    protected $method = 'CLI';
 
     /**
      * Constructor
@@ -93,9 +95,7 @@ class CLIRequest extends Request
      */
     public function getPath(): string
     {
-        $path = implode('/', $this->segments);
-
-        return ($path === '') ? '' : $path;
+        return implode('/', $this->segments);
     }
 
     /**

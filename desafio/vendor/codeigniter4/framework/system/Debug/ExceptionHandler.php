@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of CodeIgniter 4 framework.
  *
@@ -45,7 +47,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         RequestInterface $request,
         ResponseInterface $response,
         int $statusCode,
-        int $exitCode
+        int $exitCode,
     ): void {
         // ResponseTrait needs these properties.
         $this->request  = $request;
@@ -54,7 +56,7 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         if ($request instanceof IncomingRequest) {
             try {
                 $response->setStatusCode($statusCode);
-            } catch (HTTPException $e) {
+            } catch (HTTPException) {
                 // Workaround for invalid HTTP status code.
                 $statusCode = 500;
                 $response->setStatusCode($statusCode);
@@ -66,15 +68,17 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
                         'HTTP/%s %s %s',
                         $request->getProtocolVersion(),
                         $response->getStatusCode(),
-                        $response->getReasonPhrase()
+                        $response->getReasonPhrase(),
                     ),
                     true,
-                    $statusCode
+                    $statusCode,
                 );
             }
 
-            if (strpos($request->getHeaderLine('accept'), 'text/html') === false) {
-                $data = (ENVIRONMENT === 'development' || ENVIRONMENT === 'testing')
+            // Handles non-HTML requests.
+            if (! str_contains($request->getHeaderLine('accept'), 'text/html')) {
+                // If display_errors is enabled, shows the error details.
+                $data = $this->isDisplayErrorsEnabled()
                     ? $this->collectVars($exception, $statusCode)
                     : '';
 
@@ -127,18 +131,13 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
     protected function determineView(
         Throwable $exception,
         string $templatePath,
-        int $statusCode = 500
+        int $statusCode = 500,
     ): string {
         // Production environments should have a custom exception file.
         $view = 'production.php';
 
-        if (
-            in_array(
-                strtolower(ini_get('display_errors')),
-                ['1', 'true', 'on', 'yes'],
-                true
-            )
-        ) {
+        if ($this->isDisplayErrorsEnabled()) {
+            // If display_errors is enabled, shows the error details.
             $view = 'error_exception.php';
         }
 
@@ -155,5 +154,14 @@ final class ExceptionHandler extends BaseExceptionHandler implements ExceptionHa
         }
 
         return $view;
+    }
+
+    private function isDisplayErrorsEnabled(): bool
+    {
+        return in_array(
+            strtolower(ini_get('display_errors')),
+            ['1', 'true', 'on', 'yes'],
+            true,
+        );
     }
 }

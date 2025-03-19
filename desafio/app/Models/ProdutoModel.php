@@ -2,13 +2,20 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
-use App\Libraries\RespostaPronta;
 
-
-class ProdutoModel extends Model
-{
+class ProdutoModel extends Model {
     protected $table      = 'produto_tabela';
-    protected $primaryKey = 'produto_id';
-    protected $allowedFields = ['preco', 'descricao'];
+    protected $primaryKey = 'id_produto';
+    protected $allowedFields = ['nome_produto', 'preco'];
+    protected $rota = 'produtos/';
 
+    public function tabelaInformacao() {
+        return [
+            'table'         => $this->table,
+            'primaryKey'    => $this->primaryKey,
+            'allowedFields' => $this->allowedFields,
+            'rota'          => $this->rota
+        ];
+    }
+    
 }
